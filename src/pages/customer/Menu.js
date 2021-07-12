@@ -37,6 +37,7 @@ const Menu = () => {
 
   useEffect(() => {
     axios.get(API_URL).then((response) => {
+      console.log(response);
       const menu = response.data.data.map((item) => {
         return {
           name: item.itemName,

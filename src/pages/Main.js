@@ -49,7 +49,11 @@ const Main = () => {
   return (
     <Root>
       <ImageWrapper>
-        <img src="images/burger.png" width="300px" />
+        <img
+          src={process.env.PUBLIC_URL + "/images/burger.png"}
+          alt="burger_image"
+          width="300px"
+        />
       </ImageWrapper>
       <TextWrapper>
         <Title>{PROJECT_TITLE}</Title>
