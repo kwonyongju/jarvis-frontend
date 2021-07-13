@@ -20,7 +20,7 @@ import Sales from "./pages/manager/Sales";
 const App = () => {
   return (
     <>
-      <Router basename="/jarvis">
+      <Router basename="jarvis">
         <GlobalStyle />
         <Header>
           <Navbar navLeft={"Home"} navItems={NAV_ITEMS} />

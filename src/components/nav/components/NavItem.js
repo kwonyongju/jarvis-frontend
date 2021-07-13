@@ -41,16 +41,14 @@ const DropdownContent = styled.div`
   }
 `;
 
-const NavItem = ({ last, linkTo, name, subItems }) => {
+const NavItem = ({ last, name, subItems }) => {
   const RootStyle = {
     last: last,
   };
 
   return (
     <Dropdown>
-      <Root {...RootStyle}>
-        <Link to={linkTo}>{name}</Link>
-      </Root>
+      <Root {...RootStyle}>{name}</Root>
       <DropdownContent>
         {subItems?.map((item, index) => (
           <Link key={index} to={item.label}>

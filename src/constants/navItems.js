@@ -5,7 +5,6 @@ export const NAV_ITEMS = [
       { name: "Menu/Order", label: "Menu" },
       { name: "Order History", label: "purchases" },
     ],
-    label: "customer",
   },
   {
     name: "Manager",
@@ -15,6 +14,5 @@ export const NAV_ITEMS = [
       { name: "Order History", label: "orders" },
       { name: "Sales History", label: "sales" },
     ],
-    label: "manager",
   },
 ];
