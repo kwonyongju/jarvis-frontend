@@ -17,7 +17,7 @@ const Root = styled.div``;
 const InventoryManagement = () => {
   const [inventoryData, setInventoryData] = useState([]);
   const [inputMatrix, setInputMatrix] = useState({
-    personId: 2,
+    personId: 3,
     orderIngredients: [],
   });
 
@@ -52,19 +52,22 @@ const InventoryManagement = () => {
   }, []);
 
   const getInventory = () => {
-    axios.get(API_URL).then((response) => {
-      if (response.status === 200) {
-        const temp = response.data.data.map((ingredient) => {
-          return {
-            name: ingredient.ingredientName,
-            quantity: ingredient.stockQuantity,
-            price: ingredient.priceInCent / 100,
-          };
-        });
+    axios
+      .get(API_URL)
+      .then((response) => {
+        if (response.status === 200) {
+          const temp = response.data.data.map((ingredient) => {
+            return {
+              name: ingredient.ingredientName,
+              quantity: ingredient.stockQuantity,
+              price: ingredient.priceInCent / 100,
+            };
+          });
 
-        setInventoryData(temp);
-      }
-    });
+          setInventoryData(temp);
+        }
+      })
+      .catch((error) => console.error(error));
   };
 
   const handleOnAddToCart = (e) => {

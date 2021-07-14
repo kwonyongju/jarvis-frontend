@@ -1,5 +1,6 @@
 {
   "name": "jarvis-frontend",
+  "homepage": "https://www.yongju-kwon.com/jarvis",
   "author": "Yongju Kwon",
   "version": "0.1.0",
   "private": true,
@@ -31,7 +32,7 @@
   },
   "scripts": {
     "start": "react-scripts start",
-    "build": "react-scripts build",
+    "build": "DISABLE_ESLINT_PLUGIN=true react-scripts build",
     "test": "react-scripts test"
   },
   "eslintConfig": {

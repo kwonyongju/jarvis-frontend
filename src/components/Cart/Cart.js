@@ -67,18 +67,21 @@ const Cart = ({
     if (data.length > 1) {
       const body = JSON.parse(constructRequestBody());
 
-      axios.post(apiUrl, body).then((response) => {
-        if (response.status === 200 && response.data.id > 0) {
-          toggleModal(successMessage);
-          refresh ? refresh() : null;
-          setData([]);
-          onChange({ name: orderLabel, value: [] });
-        }
+      axios
+        .post(apiUrl, body)
+        .then((response) => {
+          if (response.status === 200 && response.data.id > 0) {
+            toggleModal(successMessage);
+            refresh ? refresh() : null;
+            setData([]);
+            onChange({ name: orderLabel, value: [] });
+          }
 
-        if (response.data.id === -1) {
-          toggleModal(errorMessage);
-        }
-      });
+          if (response.data.id === -1) {
+            toggleModal(errorMessage);
+          }
+        })
+        .catch((error) => console.error(error));
     } else toggleModal(warningMessage);
   };
 

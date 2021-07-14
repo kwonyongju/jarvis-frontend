@@ -5,6 +5,7 @@ import styled from "styled-components";
 
 import Table from "../../components/elements/Table/Table";
 import { NO_INGREDIENT_ORDER_YET_MSG } from "../../constants/messages";
+import LoadingSpin from "../../components/elements/LoadingSpin/LoadingSpin";
 
 const API_URL = process.env.REACT_APP_API_ORDER_GET_URL;
 
@@ -31,54 +32,72 @@ const OrderLink = styled(Link)`
 
 const OrderHistory = () => {
   const [inputMatrix, setInputMatrix] = useState([]);
+  const [dataFetched, setDataFetched] = useState(false);
   const headers = ["Date", "Employee Name", "Ingredients", "Total Price"];
   const labels = ["date", "employeeName", "orderIngredients", "totalPrice"];
   const subLabels = ["name", "quantity", "price"];
 
   useEffect(() => {
-    axios.get(API_URL).then((response) => {
-      const temp = response.data.data.map((order) => {
-        let sum = 0;
-        return {
-          date: `${order.orderDate.slice(0, 3).join("-")} ${order.orderDate
-            .slice(3, 6)
-            .join(":")}`,
-          employeeName: `${order.person.firstName} ${order.person.lastName}`,
-          orderIngredients: order.orderIngredients.map((item) => {
-            sum += item.totalPriceInCent;
-            return {
-              name: item.ingredient.name,
-              quantity: item.count,
-              price: item.totalPriceInCent / 100,
-            };
-          }),
-          totalPrice: `$${((sum / 100) * 1.05).toFixed(2)}`,
-        };
-      });
-      temp.reverse();
-      setInputMatrix(temp);
-    });
+    axios
+      .get(API_URL)
+      .then((response) => {
+        const temp = response.data.data.map((order) => {
+          let sum = 0;
+          return {
+            date: `${order.orderDate.slice(0, 3).join("-")} ${order.orderDate
+              .slice(3, 6)
+              .join(":")}`,
+            employeeName: `${order.person.firstName} ${order.person.lastName}`,
+            orderIngredients: order.orderIngredients.map((item) => {
+              sum += item.totalPriceInCent;
+              return {
+                name: item.ingredient.name,
+                quantity: item.count,
+                price: item.totalPriceInCent / 100,
+              };
+            }),
+            totalPrice: `$${((sum / 100) * 1.05).toFixed(2)}`,
+          };
+        });
+
+        temp.reverse();
+        if (!temp.length) {
+          setDataFetched(true);
+          return;
+        }
+
+        setInputMatrix(temp);
+      })
+      .catch((error) => console.error(error));
   }, []);
 
-  return inputMatrix && inputMatrix.length ? (
-    <Root>
-      <Title>Order History</Title>
-      <Table
-        data={inputMatrix}
-        headers={headers}
-        labels={labels}
-        subItemsLabel="orderIngredients"
-        subLabels={subLabels}
-        subParentHeader="Ingredients"
-      />
-    </Root>
+  useEffect(() => {
+    if (inputMatrix.length) setDataFetched(true);
+  }, [inputMatrix]);
+
+  return dataFetched ? (
+    inputMatrix && inputMatrix.length ? (
+      <Root>
+        <Title>Order History</Title>
+        <Table
+          data={inputMatrix}
+          headers={headers}
+          labels={labels}
+          subItemsLabel="orderIngredients"
+          subLabels={subLabels}
+          subParentHeader="Ingredients"
+        />
+      </Root>
+    ) : (
+      <>
+        <NoOrderWrapper>
+          {NO_INGREDIENT_ORDER_YET_MSG}
+          <OrderLink to="/inventoryManagement">Click to order</OrderLink>
+        </NoOrderWrapper>
+      </>
+    )
   ) : (
-    <>
-      <NoOrderWrapper>
-        {NO_INGREDIENT_ORDER_YET_MSG}
-        <OrderLink to="/inventoryManagement">Click to order</OrderLink>
-      </NoOrderWrapper>
-    </>
+    <LoadingSpin />
   );
 };
 

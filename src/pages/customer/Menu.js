@@ -36,19 +36,21 @@ const Menu = () => {
   });
 
   useEffect(() => {
-    axios.get(API_URL).then((response) => {
-      console.log(response);
-      const menu = response.data.data.map((item) => {
-        return {
-          name: item.itemName,
-          description: item.itemDescription,
-          ingredients: item.ingredients.join(", "),
-          price: item.priceInCent / 100,
-        };
-      });
+    axios
+      .get(API_URL)
+      .then((response) => {
+        const menu = response.data.data.map((item) => {
+          return {
+            name: item.itemName,
+            description: item.itemDescription,
+            ingredients: item.ingredients.join(", "),
+            price: item.priceInCent / 100,
+          };
+        });
 
-      setMenu(menu);
-    });
+        setMenu(menu);
+      })
+      .catch((error) => console.error(error));
   }, []);
 
   const handleOnAddToCart = ({ itemIndex }) => {

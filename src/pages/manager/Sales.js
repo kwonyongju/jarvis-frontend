@@ -6,6 +6,7 @@ import { InstagramOutlined } from "@ant-design/icons";
 import { c_dim_green } from "../../utils/colors";
 import { NO_SALES_YET_MSG } from "../../constants/messages";
 import Table from "../../components/elements/Table/Table";
+import LoadingSpin from "../../components/elements/LoadingSpin/LoadingSpin";
 
 const API_URL = process.env.REACT_APP_API_PURCHASE_URL;
 
@@ -26,55 +27,73 @@ const NoOrderWrapper = styled.div`
 
 const Sales = () => {
   const [inputMatrix, setInputMatrix] = useState([]);
+  const [dataFetched, setDataFetched] = useState(false);
   const headers = ["Date", "Customer Name", "Items", "Total Price"];
   const labels = ["date", "customerName", "items", "totalPrice"];
   const subLabels = ["name", "quantity", "price"];
 
   useEffect(() => {
-    axios.get(API_URL).then((response) => {
-      const temp = response.data.data.map((sale) => {
-        let sum = 0;
-        return {
-          date: `${sale.purchaseDate.slice(0, 3).join("-")} ${sale.purchaseDate
-            .slice(3, 6)
-            .join(":")}`,
-          customerName: `${sale.customer.firstName} ${sale.customer.lastName}`,
-          items: sale.purchaseItems.map((purchaseItem) => {
-            sum += purchaseItem.totalPriceInCent;
-            return {
-              name: purchaseItem.itemName,
-              quantity: purchaseItem.quantity,
-              price: purchaseItem.totalPriceInCent / 100,
-            };
-          }),
-          totalPrice: `$${((sum / 100) * 1.05).toFixed(2)}`,
-        };
-      });
-      temp.reverse();
-      setInputMatrix(temp);
-    });
+    axios
+      .get(API_URL)
+      .then((response) => {
+        const temp = response.data.data.map((sale) => {
+          let sum = 0;
+          return {
+            date: `${sale.purchaseDate
+              .slice(0, 3)
+              .join("-")} ${sale.purchaseDate.slice(3, 6).join(":")}`,
+            customerName: `${sale.customer.firstName} ${sale.customer.lastName}`,
+            items: sale.purchaseItems.map((purchaseItem) => {
+              sum += purchaseItem.totalPriceInCent;
+              return {
+                name: purchaseItem.itemName,
+                quantity: purchaseItem.quantity,
+                price: purchaseItem.totalPriceInCent / 100,
+              };
+            }),
+            totalPrice: `$${((sum / 100) * 1.05).toFixed(2)}`,
+          };
+        });
+        temp.reverse();
+
+        if (!temp.length) {
+          setDataFetched(true);
+          return;
+        }
+
+        setInputMatrix(temp);
+      })
+      .catch((error) => console.error(error));
   }, []);
 
-  return inputMatrix && inputMatrix.length ? (
-    <Root>
-      <Title>Sales History</Title>
+  useEffect(() => {
+    if (inputMatrix.length) setDataFetched(true);
+  }, [inputMatrix]);
 
-      <Table
-        data={inputMatrix}
-        headers={headers}
-        labels={labels}
-        subItemsLabel="items"
-        subLabels={subLabels}
-        subParentHeader="Items"
-      />
-    </Root>
+  return dataFetched ? (
+    inputMatrix && inputMatrix.length ? (
+      <Root>
+        <Title>Sales History</Title>
+
+        <Table
+          data={inputMatrix}
+          headers={headers}
+          labels={labels}
+          subItemsLabel="items"
+          subLabels={subLabels}
+          subParentHeader="Items"
+        />
+      </Root>
+    ) : (
+      <NoOrderWrapper>
+        {NO_SALES_YET_MSG}
+        <InstagramOutlined
+          style={{ fontSize: "40px", color: `${c_dim_green}` }}
+        />
+      </NoOrderWrapper>
+    )
   ) : (
-    <NoOrderWrapper>
-      {NO_SALES_YET_MSG}
-      <InstagramOutlined
-        style={{ fontSize: "40px", color: `${c_dim_green}` }}
-      />
-    </NoOrderWrapper>
+    <LoadingSpin />
   );
 };
 

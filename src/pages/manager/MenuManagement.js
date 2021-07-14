@@ -41,7 +41,7 @@ const SubmitButton = styled.button`
 
 const MenuManagement = () => {
   const [inputMatrix, setInputMatrix] = useState({
-    personId: 1,
+    personId: 3,
     items: [],
   });
   const [menu, setMenu] = useState([]);
@@ -66,18 +66,21 @@ const MenuManagement = () => {
   }, []);
 
   const getMenu = () => {
-    axios.get(API_URL).then((response) => {
-      const menu = response.data.data.map((item) => {
-        return {
-          name: item.itemName,
-          description: item.itemDescription,
-          ingredients: item.ingredients.join(", "),
-          price: item.priceInCent / 100,
-        };
-      });
+    axios
+      .get(API_URL)
+      .then((response) => {
+        const menu = response.data.data.map((item) => {
+          return {
+            name: item.itemName,
+            description: item.itemDescription,
+            ingredients: item.ingredients.join(", "),
+            price: item.priceInCent / 100,
+          };
+        });
 
-      setMenu(menu);
-    });
+        setMenu(menu);
+      })
+      .catch((error) => console.error(error));
   };
 
   const handleInputChange = ({ name, value }) => {
@@ -119,12 +122,15 @@ const MenuManagement = () => {
     if (Object.keys(formData).length === 3 && selectedOptions.length > 0) {
       const body = constructRequestBody();
 
-      axios.post(API_URL, body).then((response) => {
-        if (response.status === 200) {
-          toggleModal();
-          getMenu();
-        }
-      });
+      axios
+        .post(API_URL, body)
+        .then((response) => {
+          if (response.status === 200) {
+            toggleModal();
+            getMenu();
+          }
+        })
+        .catch((error) => console.error(error));
     }
   };
 

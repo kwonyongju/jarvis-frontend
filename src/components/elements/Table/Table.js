@@ -123,7 +123,6 @@ const Table = ({
         {data.map((item, itemIndex) => {
           // const subItemLabel = subLabelHeader;
           const subItems = subItemsLabel && item[subItemsLabel];
-          console.log(subItems);
           // if nested data exist
           if (subItems) {
             return subItems.map((subItem, subItemIndex) => {
