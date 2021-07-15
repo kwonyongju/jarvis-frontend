@@ -1,70 +1,50 @@
-# Getting Started with Create React App
+# Jarvis-Frontend # 
+###### Spring Boot REST API for order/inventory management system ######
+> React, styled-component
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+_This project is consist of two sub-projects which are **[Jarvis-frontend](https://github.com/kwonyongju/jarvis-frontend)** and **[Jarvis-backend](https://github.com/kwonyongju/jarvis-backend)**_
 
-## Available Scripts
+Click _**[here](https://yongju-kwon.com/jarvis)**_ to go to the website
 
-In the project directory, you can run:
+*** 
 
-### `yarn start`
+### Page description
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
+_**Main page**_
 
-### `yarn test`
+- Describes what this project is, what you can do in this website
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+<img src="/public/main_page.png" width="750px" alt="main_page">\
 
-### `yarn build`
+> #### Customer
+_**Menu page**_
+- Displays all menu and customer can order items
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+<img src="/public/customer_menu.png" width="750px" alt="customer_menu">\
+_**Order history page**_
+- Displays all orders made by customer
+  
+<img src="/public/customer_history.png" width="750px" alt="customer_history">\
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+> #### Manager
+_**Inventory page**_
+- Displys current stock quantity of ingredients and manager can order 
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+<img src="/public/inventory.png" width="750px" alt="inventory">\
+_**Menu page**_
+- Displays all menu and manager can add menu items
 
-### `yarn eject`
+<img src="/public/manager_menu.png" width="750px" alt="manager_menu">\
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+_**Order history page**_
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+- Displays all orders (ingredients) made by manager
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
+<img src="/public/inventory_history.png" width="750px" alt="inventory_history">\
 
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
+_**Sales history page**_
 
-## Learn More
+- Displays all sales made by customers
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `yarn build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+<img src="/public/sales_history.png" width="750px" alt="sales_history">\
